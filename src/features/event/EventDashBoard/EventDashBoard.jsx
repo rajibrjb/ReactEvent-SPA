@@ -56,15 +56,25 @@ import EventForm from '../eventForm/EventForm'
 
 
 export default class EventDashBoard extends Component {
+  state ={
+    events: eventsDahsBoard,
+    isOpen: false
+  }
+  handleIsOpenToggle = () =>{
+    this.setState(({isOpen})=>({
+      isOpen: !isOpen
+    }))
+  }
     render() {
+      const {events,isOpen} = this.state;
         return (
             <Grid>
                 <Grid.Column width={10}>
-                    <EventList events={eventsDahsBoard}/>
+                    <EventList events={events}/>
                 </Grid.Column>
                 <Grid.Column width={6}>
-                    <Button positive content="Create Event"/>
-                    <EventForm/>
+                    <Button onClick={this.handleIsOpenToggle} positive content="Create Event"/>
+                    {isOpen && <EventForm cancelFormOpen={this.handleIsOpenToggle}/>}
                 </Grid.Column>
             </Grid>
         )
